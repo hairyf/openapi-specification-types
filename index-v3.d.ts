@@ -1,10 +1,10 @@
-import { AtWillObject } from './common'
+import { AnyObject } from './common'
 import { Server } from './server'
 import { Tag } from './tag'
 import { Paths } from './paths'
 import { Components } from './components'
 
-export interface OpenAPISpecificationV3 extends AtWillObject {
+export interface OpenAPISpecificationV3 extends AnyObject {
   openapi: string
   info: {
     description: string

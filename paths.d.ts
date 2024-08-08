@@ -1,3 +1,4 @@
+import { RequestBody } from './body'
 import { Parameter } from './parameter'
 import { Schema, Properties } from './schema'
 
@@ -24,6 +25,7 @@ export interface Method {
   parameters: Parameter[]
   responses: Responses
   security: Security[]
+  requestBody?: RequestBody
 }
 
 export interface Responses {

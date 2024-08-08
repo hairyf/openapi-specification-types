@@ -1,2 +1,3 @@
 export type StringObject = { [key: string]: string }
-export type AtWillObject = { [key: string]: any }
+export type AnyObject = { [key: string]: any }
+

@@ -1,9 +1,9 @@
-import { AtWillObject } from './common'
+import { AnyObject } from './common'
 import { Tag } from './tag'
 import { Paths } from './paths'
 import { Definitions, SecurityDefinitions } from './definitions'
 
-export interface OpenAPISpecificationV2 extends AtWillObject {
+export interface OpenAPISpecificationV2 extends AnyObject {
   swagger: string
   host: string
   basePath: string

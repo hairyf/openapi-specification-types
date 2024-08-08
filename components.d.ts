@@ -1,6 +1,6 @@
-import { AtWillObject, StringObject } from './common'
+import { RequestBody } from './body'
+import { StringObject } from './common'
 import { Definitions } from './definitions'
-import { Schema } from './schema'
 
 export interface Components {
   schemas: Definitions
@@ -9,19 +9,6 @@ export interface Components {
 
 export interface RequestBodies {
   [name: string]: RequestBody
-}
-
-export interface RequestBody {
-  description: string
-  content: {
-    [type: string]: {
-      schema: Schema
-      example: AtWillObject
-      examples: Record<string, AtWillObject>
-      encoding: Record<string, AtWillObject>
-    }
-  }
-  required: boolean
 }
 
 export interface SecuritySchemes {
@@ -44,7 +31,7 @@ export interface SecurityScheme {
   openIdConnectUrl: string
 }
 
-interface OAuthFlow {
+export interface OAuthFlow {
   authorizationUrl: string
   tokenUrl: string
   refreshUrl: string
