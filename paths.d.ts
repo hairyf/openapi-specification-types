@@ -30,9 +30,7 @@ export interface Method {
 
 export interface Responses {
   [status: number]: {
-    description: string
-    headers: Properties
-    schema: Schema
+    [type: string]: RequestBody
   }
 }
 
