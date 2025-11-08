@@ -19,6 +19,8 @@ export interface Schema {
   properties?: Properties
   xml?: { wrapped?: boolean }
   enum?: string[]
+  allOf?: Schema[]
+  example?: string
 }
 
 export interface Properties {
