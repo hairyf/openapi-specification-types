@@ -1,24 +1,23 @@
 import type { RequestBody } from './body'
 import type { Reference, StringObject } from './common'
-
 import type { Definitions } from './definitions'
+import type { Header, Link } from './header-link'
 import type { Parameter } from './parameter'
-import type { MediaTypeObject, PathItemObject, Response } from './paths'
-import type { Schema } from './schema'
+import type { MediaType, PathItem, ResponseRef } from './paths'
 
-/** Components Object — reusable objects (OpenAPI 3.x). At least one of components, paths, or webhooks MUST be present at root. */
+/** Components (OpenAPI 3.x) — reusable objects. At least one of components, paths, or webhooks MUST be present at root. */
 export interface Components {
   schemas?: Definitions
-  responses?: Record<string, Response>
+  responses?: Record<string, ResponseRef>
   parameters?: Record<string, Parameter | Reference>
-  examples?: Record<string, ExampleObject | Reference>
+  examples?: Record<string, Example | Reference>
   requestBodies?: Record<string, RequestBody | Reference>
-  headers?: Record<string, HeaderObject | Reference>
+  headers?: Record<string, Header | Reference>
   securitySchemes?: Record<string, SecurityScheme | Reference>
-  links?: Record<string, LinkObject | Reference>
-  callbacks?: Record<string, CallbackObject | Reference>
-  pathItems?: Record<string, PathItemObject | Reference>
-  mediaTypes?: Record<string, MediaTypeObject | Reference>
+  links?: Record<string, Link | Reference>
+  callbacks?: Record<string, Callback | Reference>
+  pathItems?: Record<string, PathItem | Reference>
+  mediaTypes?: Record<string, MediaType | Reference>
 }
 
 /** Request Body or $ref (OpenAPI 3.x). */
@@ -26,8 +25,8 @@ export interface RequestBodies {
   [name: string]: RequestBody | Reference
 }
 
-/** Example Object — summary, description, value/dataValue/serializedValue/externalValue (OpenAPI 3.x). */
-export interface ExampleObject {
+/** Example (OpenAPI 3.x) — summary, description, value/dataValue/serializedValue/externalValue. */
+export interface Example {
   summary?: string
   description?: string
   value?: unknown
@@ -36,36 +35,15 @@ export interface ExampleObject {
   externalValue?: string
 }
 
-/** Header Object — follows Parameter (schema or content); no name/in (OpenAPI 3.x). */
-export interface HeaderObject {
-  description?: string
-  required?: boolean
-  deprecated?: boolean
-  style?: 'simple'
-  explode?: boolean
-  schema?: Schema
-  content?: Record<string, unknown>
-  example?: unknown
-  examples?: Record<string, unknown>
+export type { Header, Link } from './header-link'
+
+/** Callback (OpenAPI 3.x) — runtime expression to Path Item. */
+export interface Callback {
+  [expression: string]: PathItem
 }
 
-/** Link Object — design-time link to another operation (OpenAPI 3.x). */
-export interface LinkObject {
-  operationRef?: string
-  operationId?: string
-  parameters?: Record<string, unknown>
-  requestBody?: unknown
-  description?: string
-  server?: unknown
-}
-
-/** Callback Object — runtime expression to Path Item (OpenAPI 3.x). */
-export interface CallbackObject {
-  [expression: string]: PathItemObject
-}
-
-// Re-export MediaTypeObject from paths for consumers
-export type { MediaTypeObject } from './paths'
+// Re-export MediaType from paths for consumers
+export type { MediaType } from './paths'
 
 // ---- Security Scheme (OpenAPI 3.x discriminated union) ----
 

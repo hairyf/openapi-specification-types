@@ -1,5 +1,5 @@
 import type { Parameter } from './parameter'
-import type { ResponseObjectV2 } from './paths'
+import type { ResponseV2 } from './paths'
 import type { Schema } from './schema'
 
 /** Definition is a Schema Object — reusable type under definitions (Swagger 2.0). */
@@ -14,26 +14,26 @@ export interface ParametersDefinitions {
   [name: string]: Parameter
 }
 
-/** Responses Definitions Object — name maps to full Response Object; reference elsewhere with #/responses/name (Spec § Responses Definitions Object). */
+/** Responses Definitions (Swagger 2.0) — name maps to full Response; reference elsewhere with #/responses/name. */
 export interface ResponsesDefinitions {
-  [name: string]: ResponseObjectV2
+  [name: string]: ResponseV2
 }
 
-/** OAuth2 flow: implicit | password | application | accessCode (Swagger 2.0). */
-export type OAuth2FlowV2 = 'implicit' | 'password' | 'application' | 'accessCode'
+/** OAuth2 flow (Swagger 2.0 only). OpenAPI 3.x uses OAuth Flows object. */
+export type OAuth2Flow = 'implicit' | 'password' | 'application' | 'accessCode'
 
-/** Scopes Object — scope name to description (Swagger 2.0). */
-export interface ScopesV2 {
+/** Scopes — scope name to description (Swagger 2.0 only). */
+export interface Scopes {
   [name: string]: string
 }
 
-/** Security Scheme: basic — no extra fields (Swagger 2.0). */
+/** Security scheme (2.0 only): basic. Cannot merge with 3.x (http with scheme "basic" has different structure). */
 export interface SecuritySchemeBasicV2 {
   type: 'basic'
   description?: string
 }
 
-/** Security Scheme: apiKey — name and in required (Swagger 2.0). */
+/** Security scheme (2.0 only): apiKey, in query|header. 3.x adds cookie and different optional fields. */
 export interface SecuritySchemeApiKeyV2 {
   type: 'apiKey'
   name: string
@@ -41,11 +41,11 @@ export interface SecuritySchemeApiKeyV2 {
   description?: string
 }
 
-/** Security Scheme: oauth2 — flow + authorizationUrl/tokenUrl (per flow) + scopes (Swagger 2.0). */
+/** Security scheme (2.0 only): oauth2 with flow + authorizationUrl/tokenUrl. 3.x uses OAuth Flows object. */
 export interface SecuritySchemeOAuth2V2 {
   type: 'oauth2'
-  flow: OAuth2FlowV2
-  scopes: ScopesV2
+  flow: OAuth2Flow
+  scopes: Scopes
   authorizationUrl?: string
   tokenUrl?: string
   description?: string

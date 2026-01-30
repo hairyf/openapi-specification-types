@@ -3,7 +3,7 @@ import type {
   OpenAPISpecificationV3,
   Parameter,
   PathItemV2,
-  ResponseObjectV2,
+  ResponseV2,
   Schema,
   SecurityDefinitions,
   Server,
@@ -75,7 +75,7 @@ describe('openapi-specification-types', () => {
   })
 
   it('exports PathItemV2 with operation and responses', () => {
-    const okResponse: ResponseObjectV2 = { description: 'OK', schema: { type: 'array', items: { type: 'string' } } }
+    const okResponse: ResponseV2 = { description: 'OK', schema: { type: 'array', items: { type: 'string' } } }
     const path: PathItemV2 = {
       get: {
         summary: 'List items',
@@ -85,12 +85,12 @@ describe('openapi-specification-types', () => {
         },
       },
     }
-    const res200 = path.get?.responses[200] as ResponseObjectV2 | undefined
+    const res200 = path.get?.responses[200] as ResponseV2 | undefined
     expect(res200?.description).toBe('OK')
   })
 
-  it('exports ResponseObjectV2', () => {
-    const res: ResponseObjectV2 = {
+  it('exports ResponseV2', () => {
+    const res: ResponseV2 = {
       description: 'Success',
       schema: { type: 'object' },
       headers: { 'X-Request-Id': { type: 'string', description: 'Request ID' } },

@@ -1,20 +1,20 @@
 import type { RequestBody } from './body'
 import type { Reference, SecurityRequirement } from './common'
-import type { Parameter } from './parameter'
+import type { Header, Link } from './header-link'
+import type { Items, Parameter } from './parameter'
 import type { Schema } from './schema'
 import type { Server } from './server'
 
 // ---- Swagger 2.0 (OpenAPI 2.0) ----
+// Types below cannot be merged with OpenAPI 3.x: different structure (e.g. Response has schema/examples vs content/links; Header has type/items vs schema/content; Operation has consumes/produces vs requestBody/callbacks).
 
-/** Security Requirement (Swagger 2.0) — alias of shared SecurityRequirement. */
-export type SecurityRequirementV2 = SecurityRequirement
-
-/** Header Object — response header (Swagger 2.0). */
-export interface HeaderObjectV2 {
+/** Header (Swagger 2.0) — response header. Uses Items for array items, not full Schema. V3 uses schema/content. */
+export interface HeaderV2 {
   description?: string
   type: 'string' | 'number' | 'integer' | 'boolean' | 'array'
   format?: string
-  items?: Schema
+  /** Required when type is "array"; Items (no $ref/file). */
+  items?: Items
   collectionFormat?: 'csv' | 'ssv' | 'tsv' | 'pipes'
   default?: unknown
   maximum?: number
@@ -31,30 +31,30 @@ export interface HeaderObjectV2 {
   multipleOf?: number
 }
 
-/** Headers Object — header name to Header Object (Swagger 2.0). */
-export interface HeadersObjectV2 {
-  [name: string]: HeaderObjectV2
+/** Headers (Swagger 2.0) — header name to Header. */
+export interface HeadersV2 {
+  [name: string]: HeaderV2
 }
 
-/** Response Object — at least description (Swagger 2.0). */
-export interface ResponseObjectV2 {
+/** Response (Swagger 2.0) — at least description. */
+export interface ResponseV2 {
   description: string
   schema?: Schema
-  headers?: HeadersObjectV2
+  headers?: HeadersV2
   /** MIME type to example value. */
   examples?: Record<string, unknown>
 }
 
 /** Response definition or $ref (Swagger 2.0). */
-export type ResponseV2 = ResponseObjectV2 | Reference
+export type ResponseV2Ref = ResponseV2 | Reference
 
-/** Responses Object — status code or "default" to Response (Swagger 2.0). */
-export interface ResponsesObjectV2 {
-  [statusCode: string]: ResponseV2
+/** Responses (Swagger 2.0) — status code or "default" to Response. */
+export interface ResponsesV2 {
+  [statusCode: string]: ResponseV2Ref
 }
 
-/** Operation Object (Swagger 2.0). */
-export interface OperationObjectV2 {
+/** Operation (Swagger 2.0). */
+export interface OperationV2 {
   tags?: string[]
   summary?: string
   description?: string
@@ -64,34 +64,41 @@ export interface OperationObjectV2 {
   produces?: string[]
   parameters?: (Parameter | Reference)[]
   /** At least one response required. */
-  responses: ResponsesObjectV2
+  responses: ResponsesV2
   schemes?: ('http' | 'https' | 'ws' | 'wss')[]
   deprecated?: boolean
-  security?: SecurityRequirementV2[]
+  security?: SecurityRequirement[]
 }
 
-/** Path Item Object or $ref (Swagger 2.0). */
+/** Path Item (Swagger 2.0) — inline definition; do not mix with $ref. */
 export interface PathItemV2 {
-  $ref?: string
-  get?: OperationObjectV2
-  put?: OperationObjectV2
-  post?: OperationObjectV2
-  delete?: OperationObjectV2
-  options?: OperationObjectV2
-  head?: OperationObjectV2
-  patch?: OperationObjectV2
+  get?: OperationV2
+  put?: OperationV2
+  post?: OperationV2
+  delete?: OperationV2
+  options?: OperationV2
+  head?: OperationV2
+  patch?: OperationV2
   parameters?: (Parameter | Reference)[]
 }
 
-/** Paths Object (Swagger 2.0). */
+/** Path Item $ref (Swagger 2.0) — when present, other path fields must not be used. */
+export interface PathItemRefV2 {
+  $ref: string
+}
+
+/** Path Item or $ref (Swagger 2.0). */
+export type PathItemV2Ref = PathItemRefV2 | PathItemV2
+
+/** Paths (Swagger 2.0). */
 export interface PathsV2 {
-  [path: string]: PathItemV2
+  [path: string]: PathItemV2Ref
 }
 
 // ---- OpenAPI 3.x (shared / legacy) ----
 
-/** Media Type Object — content for a media type (OpenAPI 3.x). */
-export interface MediaTypeObject {
+/** Media Type (OpenAPI 3.x) — content for a media type. */
+export interface MediaType {
   schema?: Schema
   /** Sequential media types (e.g. application/jsonl) — per-item schema (OpenAPI 3.1+). */
   itemSchema?: Schema
@@ -100,25 +107,27 @@ export interface MediaTypeObject {
   encoding?: Record<string, unknown>
 }
 
-/** Response Object — possible response (OpenAPI 3.x). */
-export interface ResponseObject {
+/** Response (OpenAPI 3.x) — possible response. */
+export interface Response {
   description?: string
   summary?: string
-  headers?: Record<string, unknown>
-  /** Media type or range → Media Type Object or Reference. */
-  content?: Record<string, MediaTypeObject | Reference>
-  links?: Record<string, unknown>
+  /** Header name → Header or Reference (reused from Components). */
+  headers?: Record<string, Header | Reference>
+  /** Media type or range → Media Type or Reference. */
+  content?: Record<string, MediaType | Reference>
+  /** Link name → Link or Reference (reused from Components). */
+  links?: Record<string, Link | Reference>
 }
 
 /** Response or $ref (OpenAPI 3.x). */
-export type Response = ResponseObject | Reference
+export type ResponseRef = Response | Reference
 
-/** Responses Object — status code or "default" to Response (OpenAPI 3.x). */
+/** Responses (OpenAPI 3.x) — status code or "default" to Response. */
 export interface Responses {
-  [status: string]: Response
+  [status: string]: ResponseRef
 }
 
-/** Operation Object — one API operation (OpenAPI 3.x). */
+/** Operation (OpenAPI 3.x) — one API operation. */
 export interface Method {
   tags?: string[]
   summary?: string
@@ -128,14 +137,15 @@ export interface Method {
   parameters?: (Parameter | Reference)[]
   requestBody?: RequestBody | Reference
   responses: Responses
-  callbacks?: Record<string, unknown>
+  /** Runtime expression → Path Item or Reference (Callback). */
+  callbacks?: Record<string, PathItem | Reference>
   deprecated?: boolean
   security?: Security[]
   servers?: Server[]
 }
 
-/** Path Item Object — operations on a single path (OpenAPI 3.x). */
-export interface PathItemObject {
+/** Path Item (OpenAPI 3.x) — operations on a single path. */
+export interface PathItem {
   $ref?: string
   summary?: string
   description?: string
@@ -156,7 +166,7 @@ export interface PathItemObject {
 }
 
 export interface Paths {
-  [path: string]: PathItemObject
+  [path: string]: PathItem
 }
 
 /** Security Requirement (OpenAPI 3.x) — alias of shared SecurityRequirement. */
