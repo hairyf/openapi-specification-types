@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/hairyf/skills-manifest/main/skills-manifest.schema.json",
+  "agents": [
+    "cursor",
+    "claude-code"
+  ],
+  "skills": {
+    "hairyf/skills": [
+      "arch-tsdown",
+      "openapi-specification-v2",
+      "openapi-specification-v3.2",
+      "pnpm",
+      "tsdown"
+    ]
+  }
+}

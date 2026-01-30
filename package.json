@@ -7,6 +7,13 @@
     "openapi",
     "types"
   ],
+  "scripts": {
+    "prepare": "skills-manifest install"
+  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "skills": "^1.2.3",
+    "skills-manifest": "^0.2.1"
+  }
 }
