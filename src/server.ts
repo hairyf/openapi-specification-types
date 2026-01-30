@@ -1,11 +1,18 @@
+/** Server Object — target host; supports variables in {braces} (OpenAPI 3.x). */
 export interface Server {
+  /** **REQUIRED**. Target host URL; query and fragment MUST NOT be used. */
   url: string
-  description: string
-  variables: Record<string, Variable>
+  description?: string
+  /** Optional unique string for the host (OpenAPI 3.1+). */
+  name?: string
+  variables?: Record<string, ServerVariable>
 }
 
-export interface Variable {
-  enum: string[]
+/** Server Variable Object — substitution in server url (OpenAPI 3.x). */
+export interface ServerVariable {
+  /** **REQUIRED**. Default for substitution; MUST be in enum if enum is defined. */
   default: string
-  description: string
+  /** If present, substitution values from this set. */
+  enum?: string[]
+  description?: string
 }

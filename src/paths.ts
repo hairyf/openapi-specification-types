@@ -1,14 +1,13 @@
 import type { RequestBody } from './body'
-import type { Reference } from './common'
+import type { Reference, SecurityRequirement } from './common'
 import type { Parameter } from './parameter'
 import type { Schema } from './schema'
+import type { Server } from './server'
 
 // ---- Swagger 2.0 (OpenAPI 2.0) ----
 
-/** Security Requirement Object — scheme name to list of scopes ([] for basic/apiKey). */
-export interface SecurityRequirementV2 {
-  [schemeName: string]: string[]
-}
+/** Security Requirement (Swagger 2.0) — alias of shared SecurityRequirement. */
+export type SecurityRequirementV2 = SecurityRequirement
 
 /** Header Object — response header (Swagger 2.0). */
 export interface HeaderObjectV2 {
@@ -91,47 +90,74 @@ export interface PathsV2 {
 
 // ---- OpenAPI 3.x (shared / legacy) ----
 
-export interface Paths {
-  [path: string]: {
-    get?: Method
-    put?: Method
-    post?: Method
-    delete?: Method
-    options?: Method
-    head?: Method
-    patch?: Method
-    parameters?: Parameter[]
-  }
+/** Media Type Object — content for a media type (OpenAPI 3.x). */
+export interface MediaTypeObject {
+  schema?: Schema
+  /** Sequential media types (e.g. application/jsonl) — per-item schema (OpenAPI 3.1+). */
+  itemSchema?: Schema
+  example?: unknown
+  examples?: Record<string, unknown>
+  encoding?: Record<string, unknown>
 }
 
+/** Response Object — possible response (OpenAPI 3.x). */
+export interface ResponseObject {
+  description?: string
+  summary?: string
+  headers?: Record<string, unknown>
+  /** Media type or range → Media Type Object or Reference. */
+  content?: Record<string, MediaTypeObject | Reference>
+  links?: Record<string, unknown>
+}
+
+/** Response or $ref (OpenAPI 3.x). */
+export type Response = ResponseObject | Reference
+
+/** Responses Object — status code or "default" to Response (OpenAPI 3.x). */
+export interface Responses {
+  [status: string]: Response
+}
+
+/** Operation Object — one API operation (OpenAPI 3.x). */
 export interface Method {
   tags?: string[]
   summary?: string
   description?: string
+  externalDocs?: { url: string, description?: string }
   operationId?: string
-  consumes?: string[]
-  produces?: string[]
-  parameters?: Parameter[]
+  parameters?: (Parameter | Reference)[]
+  requestBody?: RequestBody | Reference
   responses: Responses
+  callbacks?: Record<string, unknown>
+  deprecated?: boolean
   security?: Security[]
-  requestBody?: RequestBody
+  servers?: Server[]
 }
 
-export interface Responses {
-  [status: string]: {
-    description?: string
-    content?: {
-      [mediaType: string]: {
-        schema?: Schema
-        example?: unknown
-        examples?: Record<string, unknown>
-        encoding?: Record<string, unknown>
-      }
-    }
-    headers?: Record<string, unknown>
-  }
+/** Path Item Object — operations on a single path (OpenAPI 3.x). */
+export interface PathItemObject {
+  $ref?: string
+  summary?: string
+  description?: string
+  get?: Method
+  put?: Method
+  post?: Method
+  delete?: Method
+  options?: Method
+  head?: Method
+  patch?: Method
+  trace?: Method
+  /** QUERY method (IETF safe-method-w-body) (OpenAPI 3.2). */
+  query?: Method
+  /** Additional HTTP methods (OpenAPI 3.2). */
+  additionalOperations?: Record<string, Method>
+  servers?: Server[]
+  parameters?: (Parameter | Reference)[]
 }
 
-export interface Security {
-  [schemeName: string]: string[]
+export interface Paths {
+  [path: string]: PathItemObject
 }
+
+/** Security Requirement (OpenAPI 3.x) — alias of shared SecurityRequirement. */
+export type Security = SecurityRequirement

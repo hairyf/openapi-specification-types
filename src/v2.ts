@@ -1,37 +1,19 @@
-import type { AnyObject } from './common'
+import type { AnyObject, Contact, Info, License } from './common'
 import type { Definitions, ParametersDefinitions, ResponsesDefinitions, SecurityDefinitions } from './definitions'
 import type { PathsV2, SecurityRequirementV2 } from './paths'
+import type { ExternalDocs, Tag } from './tag'
 
-import type { Tag } from './tag'
+/** Contact (Swagger 2.0) — alias of shared Contact. */
+export type ContactV2 = Contact
 
-/** Contact Object — optional under Info (Swagger 2.0). */
-export interface ContactV2 {
-  name?: string
-  url?: string
-  email?: string
-}
+/** License (Swagger 2.0) — alias of shared License (v2 uses name + url only). */
+export type LicenseV2 = License
 
-/** License Object — optional under Info; name required when present (Swagger 2.0). */
-export interface LicenseV2 {
-  name: string
-  url?: string
-}
+/** Info (Swagger 2.0) — alias of shared Info. */
+export type InfoV2 = Info
 
-/** Info Object — required at root; title and version required (Swagger 2.0). */
-export interface InfoV2 {
-  title: string
-  version: string
-  description?: string
-  termsOfService?: string
-  contact?: ContactV2
-  license?: LicenseV2
-}
-
-/** External Documentation Object (Swagger 2.0). */
-export interface ExternalDocsV2 {
-  url: string
-  description?: string
-}
+/** External Documentation (Swagger 2.0) — alias of shared ExternalDocs. */
+export type ExternalDocsV2 = ExternalDocs
 
 export interface OpenAPISpecificationV2 extends AnyObject {
   /** MUST be "2.0". */
@@ -64,5 +46,5 @@ export interface OpenAPISpecificationV2 extends AnyObject {
   /** Tag list with metadata. */
   tags?: Tag[]
   /** Additional documentation. */
-  externalDocs?: ExternalDocsV2
+  externalDocs?: ExternalDocs
 }

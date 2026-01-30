@@ -1,5 +1,5 @@
-/** JSON Schema / Swagger 2.0 primitive types; file for Parameter/Response only. */
-export type SchemaType = 'string' | 'number' | 'integer' | 'boolean' | 'array' | 'object' | 'file'
+/** JSON Schema / Swagger 2.0 primitive types; file for Parameter/Response only; null for JSON Schema 2020-12 (OpenAPI 3.x). */
+export type SchemaType = 'string' | 'number' | 'integer' | 'boolean' | 'array' | 'object' | 'file' | 'null'
 
 export interface Schema {
   $ref?: string
