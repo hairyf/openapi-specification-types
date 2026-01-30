@@ -1,4 +1,4 @@
-import { Schema } from './schema'
+import type { Schema } from './schema'
 
 export interface Parameter extends Schema {
   name: string

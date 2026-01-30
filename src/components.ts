@@ -1,6 +1,6 @@
-import { RequestBody } from './body'
-import { StringObject } from './common'
-import { Definitions } from './definitions'
+import type { RequestBody } from './body'
+import type { StringObject } from './common'
+import type { Definitions } from './definitions'
 
 export interface Components {
   schemas: Definitions

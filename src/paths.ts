@@ -1,6 +1,5 @@
-import { RequestBody } from './body'
-import { Parameter } from './parameter'
-import { Schema, Properties } from './schema'
+import type { RequestBody } from './body'
+import type { Parameter } from './parameter'
 
 export interface Paths {
   [path: string]: {

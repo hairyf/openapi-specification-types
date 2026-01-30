@@ -1,8 +1,8 @@
-import { AnyObject } from './common'
-import { Server } from './server'
-import { Tag } from './tag'
-import { Paths } from './paths'
-import { Components } from './components'
+import type { AnyObject } from './common'
+import type { Components } from './components'
+import type { Paths } from './paths'
+import type { Server } from './server'
+import type { Tag } from './tag'
 
 export interface OpenAPISpecificationV3 extends AnyObject {
   openapi: string

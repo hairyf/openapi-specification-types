@@ -1,19 +1,51 @@
 {
   "name": "openapi-specification-types",
+  "type": "module",
   "version": "0.0.4",
-  "types": "./index.d.ts",
-  "main": "index.js",
-  "keywords": [
-    "openapi",
-    "types"
-  ],
-  "scripts": {
-    "prepare": "skills-manifest install"
-  },
+  "description": "TypeScript types for OpenAPI 2.0 and 3.x specifications",
   "author": "",
   "license": "ISC",
+  "keywords": [
+    "openapi",
+    "types",
+    "swagger"
+  ],
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc",
+    "test": "vitest",
+    "lint": "eslint .",
+    "release": "bumpp",
+    "prepublishOnly": "pnpm run build",
+    "prepare": "simple-git-hooks && skills-manifest install"
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^7.0.0",
+    "bumpp": "^10.0.0",
+    "eslint": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "publint": "^0.3.17",
+    "simple-git-hooks": "^2.13.0",
     "skills": "^1.2.3",
-    "skills-manifest": "^0.2.1"
+    "skills-manifest": "^0.2.1",
+    "tsdown": "^0.20.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0",
+    "vitest-package-exports": "^1.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

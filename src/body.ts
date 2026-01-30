@@ -1,5 +1,5 @@
-import { AnyObject } from "./common"
-import { Schema } from "./schema"
+import type { AnyObject } from './common'
+import type { Schema } from './schema'
 
 export interface RequestBody {
   description?: string

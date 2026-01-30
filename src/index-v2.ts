@@ -1,7 +1,7 @@
-import { AnyObject } from './common'
-import { Tag } from './tag'
-import { Paths } from './paths'
-import { Definitions, SecurityDefinitions } from './definitions'
+import type { AnyObject } from './common'
+import type { Definitions, SecurityDefinitions } from './definitions'
+import type { Paths } from './paths'
+import type { Tag } from './tag'
 
 export interface OpenAPISpecificationV2 extends AnyObject {
   swagger: string
