@@ -1,26 +1,43 @@
-type SchemaNumberType = 'integer' | 'long' | 'float' | 'byte' | 'TypesLong' | 'TypesString' | 'string'
-type SchemaStringType = 'byte' | 'binary' | 'date' | 'dateTime' | 'password'
-type SchemaBooleanType = 'boolean'
-type SchemaObjectType = 'object'
-type SchemaArrayType = 'array'
-
-type SchemaType = SchemaNumberType | SchemaStringType | SchemaBooleanType | SchemaObjectType | SchemaArrayType
+/** JSON Schema / Swagger 2.0 primitive types; file for Parameter/Response only. */
+export type SchemaType = 'string' | 'number' | 'integer' | 'boolean' | 'array' | 'object' | 'file'
 
 export interface Schema {
-  type?: SchemaType | SchemaType[]
-  items?: Schema
-  additionalProperties?: Schema
-  originalRef?: string
   $ref?: string
-  required?: boolean
   format?: string
+  title?: string
   description?: string
-  schema?: Schema
-  properties?: Properties
-  xml?: { wrapped?: boolean }
-  enum?: string[]
+  default?: unknown
+  type?: SchemaType | SchemaType[]
+  /** JSON Schema validation. */
+  multipleOf?: number
+  maximum?: number
+  minimum?: number
+  exclusiveMaximum?: boolean
+  exclusiveMinimum?: boolean
+  maxLength?: number
+  minLength?: number
+  pattern?: string
+  maxItems?: number
+  minItems?: number
+  uniqueItems?: boolean
+  maxProperties?: number
+  minProperties?: number
+  required?: string[]
+  enum?: unknown[]
+  items?: Schema
   allOf?: Schema[]
-  example?: string
+  properties?: Properties
+  additionalProperties?: Schema | boolean
+  /** Swagger 2.0: polymorphism; property name in required; value = definition name. */
+  discriminator?: string
+  /** Swagger 2.0: property only in response. */
+  readOnly?: boolean
+  /** Swagger 2.0: example instance. */
+  example?: unknown
+  xml?: { name?: string, namespace?: string, prefix?: string, attribute?: boolean, wrapped?: boolean }
+  externalDocs?: { url: string, description?: string }
+  /** Legacy / codegen. */
+  originalRef?: string
 }
 
 export interface Properties {

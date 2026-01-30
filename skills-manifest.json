@@ -10,6 +10,7 @@
       "openapi-specification-v2",
       "openapi-specification-v3.2",
       "pnpm",
+      "vitest",
       "tsdown"
     ]
   }

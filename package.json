@@ -22,7 +22,7 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "tsc",
-    "test": "vitest",
+    "test": "vitest --typecheck",
     "lint": "eslint .",
     "release": "bumpp",
     "prepublishOnly": "pnpm run build",

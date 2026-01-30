@@ -1,22 +1,32 @@
 import type { OpenAPISpecificationV2, OpenAPISpecificationV3, Schema } from '../src/index'
-import { describe, expect, it } from 'vitest'
 
 describe('openapi-specification-types', () => {
   it('exports OpenAPISpecificationV2 type', () => {
     const v2: OpenAPISpecificationV2 = {
       swagger: '2.0',
+      info: { title: 'API', version: '1.0' },
+      paths: {},
+    }
+    expect(v2.swagger).toBe('2.0')
+
+    const v2Full: OpenAPISpecificationV2 = {
+      swagger: '2.0',
+      info: { title: 'API', version: '1.0', description: '', termsOfService: '', contact: { name: '', url: '', email: '' }, license: { name: '', url: '' } },
+      paths: {},
       host: 'example.com',
       basePath: '/',
       schemes: ['https'],
       consumes: [],
-      info: { description: '', version: '1.0', title: 'API', termsOfService: '', contact: { name: '', url: '', email: '' }, license: { name: '', url: '' } },
-      paths: {},
+      produces: [],
       definitions: {},
+      parameters: {},
+      responses: {},
       securityDefinitions: {},
+      security: [],
       tags: [],
-      externalDocs: { description: '', url: '' },
+      externalDocs: { url: 'https://example.com', description: '' },
     }
-    expect(v2.swagger).toBe('2.0')
+    expect(v2Full.host).toBe('example.com')
   })
 
   it('exports OpenAPISpecificationV3 type', () => {
