@@ -58,12 +58,9 @@ const v3: OpenAPISpecificationV3 = {
 
 | Command | Description |
 |---------|-------------|
-| `pnpm run build` | Build to `dist/` |
-| `pnpm run dev` | Build in watch mode |
 | `pnpm run typecheck` | TypeScript type check |
 | `pnpm run test` | Run Vitest (runtime + type tests) |
 | `pnpm run lint` | Run ESLint |
-| `pnpm run release` | Bump version and create tag (for CI publish) |
 
 ## Testing
 
