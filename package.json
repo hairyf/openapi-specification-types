@@ -3,8 +3,14 @@
   "type": "module",
   "version": "0.1.0",
   "description": "TypeScript types for OpenAPI 2.0 and 3.x specifications",
-  "author": "",
+  "author": "hairyf",
   "license": "ISC",
+  "homepage": "https://github.com/hairyf/openapi-specification-types#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hairyf/openapi-specification-types.git"
+  },
+  "bugs": "https://github.com/hairyf/openapi-specification-types/issues",
   "keywords": [
     "openapi",
     "types",
