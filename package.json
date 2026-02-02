@@ -1,7 +1,8 @@
 {
   "name": "openapi-specification-types",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "packageManager": "pnpm@10.28.2",
   "description": "TypeScript types for OpenAPI 2.0 and 3.x specifications",
   "author": "hairyf",
   "license": "ISC",
