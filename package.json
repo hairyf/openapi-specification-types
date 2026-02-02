@@ -1,7 +1,7 @@
 {
   "name": "openapi-specification-types",
   "type": "module",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "TypeScript types for OpenAPI 2.0 and 3.x specifications",
   "author": "",
   "license": "ISC",
